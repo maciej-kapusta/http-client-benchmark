@@ -29,10 +29,6 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class TestHarness {
 
-    static {
-        System.setProperty("archaius.configurationSource.defaultFileName", "hystrixfun.properties");
-    }
-
     private SampleHttpServer server;
     private BaseHttpExperiment oldAsynchExperiment;
     private NewAsyncHttpClientExperiment newAsynchExperiment;
