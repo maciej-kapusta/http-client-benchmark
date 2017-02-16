@@ -1,5 +1,6 @@
 package com.codewise.httpclientbench;
 
+import com.codewise.httpclientbench.reproducer.HttpServer;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
@@ -29,13 +30,13 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Benchmark)
 public class TestHarness {
 
-    private SampleHttpServer server;
+    private HttpServer server;
     private BaseHttpExperiment oldAsynchExperiment;
     private NewAsyncHttpClientExperiment newAsynchExperiment;
 
     @Setup(Level.Trial)
     public void setUp() {
-        server = new SampleHttpServer();
+        server = new HttpServer(8080);
 
         sleepUninterruptibly(4, TimeUnit.SECONDS);
         oldAsynchExperiment = new OldAsyncHttpClientExperiment();

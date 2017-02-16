@@ -1,15 +1,15 @@
-package com.codewise.httpclientbench;
+package com.codewise.httpclientbench.reproducer;
 
 import io.undertow.Undertow;
 import io.undertow.util.Headers;
 
-public class SampleHttpServer implements AutoCloseable {
+public class HttpServer implements AutoCloseable {
 
     private final Undertow server;
 
-    public SampleHttpServer() {
+    public HttpServer(int port) {
         server = Undertow.builder()
-                .addHttpListener(8080, "localhost")
+                .addHttpListener(port, "localhost")
                 .setHandler(exchange -> {
                     exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/plain");
                     if (exchange.getQueryParameters().get("shouldFail") == null) {
@@ -22,8 +22,8 @@ public class SampleHttpServer implements AutoCloseable {
     }
 
     public static void main(String[] args) {
-        SampleHttpServer sampleHttpServer = new SampleHttpServer();
-        Runtime.getRuntime().addShutdownHook(new Thread(sampleHttpServer::close));
+        HttpServer httpServer = new HttpServer(8080);
+        Runtime.getRuntime().addShutdownHook(new Thread(httpServer::close));
     }
 
     @Override

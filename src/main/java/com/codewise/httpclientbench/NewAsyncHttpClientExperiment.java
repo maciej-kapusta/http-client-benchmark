@@ -6,6 +6,7 @@ import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import org.asynchttpclient.Dsl;
 import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
 import org.slf4j.Logger;
@@ -26,12 +27,17 @@ public class NewAsyncHttpClientExperiment extends BaseHttpExperiment {
     public NewAsyncHttpClientExperiment() {
         super();
 
-        DefaultAsyncHttpClientConfig.Builder configBuilder = new DefaultAsyncHttpClientConfig.Builder()
+        DefaultAsyncHttpClientConfig.Builder configBuilder = Dsl.config()
                 .setConnectTimeout(SOCKET_CONNECTION_TIMEOUT)
                 .setRequestTimeout(1100)
                 .setFollowRedirect(false)
                 .setMaxRequestRetry(0)
-                .setConnectionTtl(CONNECTION_TTL_IN_MILLIS);
+                .setMaxConnectionsPerHost(200)
+                .setMaxConnections(1000)
+                .setConnectionTtl(300_000)
+                .setPooledConnectionIdleTimeout(300_000)
+                .setSoReuseAddress(true)
+                .setKeepAlive(true);
         if (System.getProperty("os.name").toUpperCase().startsWith("LINUX")) {
             configBuilder.setUseNativeTransport(true);
         }
