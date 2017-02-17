@@ -1,4 +1,4 @@
-package com.codewise.httpclientbench.reproducer;
+package com.codewise.httpclientbench;
 
 import io.undertow.Undertow;
 import io.undertow.util.Headers;

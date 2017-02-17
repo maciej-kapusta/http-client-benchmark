@@ -1,6 +1,5 @@
 package com.codewise.httpclientbench;
 
-import com.codewise.httpclientbench.reproducer.HttpServer;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
